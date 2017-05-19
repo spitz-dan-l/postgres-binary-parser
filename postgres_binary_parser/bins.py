@@ -7,6 +7,11 @@ def reduce_categories(mapping_func, col, *, vectorized=False):
     input_categories = pd.Series(col.cat.categories)
     try:
         nan_bin = mapping_func(pd.np.nan)
+
+        # Handle the case where mapping function returns the string 'nan'
+        if nan_bin == 'nan':
+            nan_bin = pd.np.nan
+
     except:
         nan_bin = pd.np.nan
 
@@ -36,4 +41,3 @@ def reduce_categories(mapping_func, col, *, vectorized=False):
 
     output_codes.index = col.index
     return pd.Categorical.from_codes(output_codes, unique_output_cats)
-
