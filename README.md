@@ -16,11 +16,11 @@ Since you are presumably using PostgreSQL, also psycopg2. Optional SqlAlchemy su
 
 ## Installation
 
-Clone this repo. Then do
+Clone this repo and `cd` inside. Then do
 
-`python setup.py install`
+`pip install .`
 
-(This compiles the Cython)
+(This compiles the Cython amd makes `postgres_binary_parser` importable as a package.)
 
 ## Demo
 For a demo, see `demo.py`. Shows that you can use this package to load and store:

@@ -7,7 +7,7 @@ from collections import defaultdict
 
 pandas.options.mode.use_inf_as_null = True
 
-from chatto_transform.lib.bins import reduce_categories
+from postgres_binary_parser.bins import reduce_categories
 from functools import partial
 
 class Schema:

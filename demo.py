@@ -37,7 +37,7 @@ test_df['g'] = pd.to_datetime('now')
 test_df['h'] = pd.to_timedelta('15 days 5 hours 30 minutes')
 test_df['i'] = True
 
-conn = psycopg2.connect(database='dspitz', user='dspitz')
+conn = psycopg2.connect(database='dan', user='dan')
 cur = conn.cursor()
 cur.execute('drop table if exists test')
 
@@ -67,3 +67,4 @@ bin_store = PsqlBinaryDataStore(test_schema, f)
 decoded_df = bin_store.load()
 print('Successfully loaded binary from Postgres and parsed it into a DataFrame')
 
+conn.commit()

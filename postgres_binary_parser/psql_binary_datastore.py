@@ -46,10 +46,10 @@ def binary_to_col(col, ser):
 @binary_to_col.register(cat)
 def _(col, b_arr, null_mask):
     u_arr = psql_binary.parse_cat_col(b_arr, null_mask.shape[0])
-    u_ser = pd.Series.from_array(u_arr).astype('category')
+    u_ser = pd.Series(u_arr).astype('category')
 
     code_arr = np.full(null_mask.shape, -1, dtype='i')
-    code_ser = pd.Series.from_array(code_arr)
+    code_ser = pd.Series(code_arr)
     code_ser.loc[~null_mask] = u_ser.cat.codes
 
     ser = pd.Categorical.from_codes(code_ser, u_ser.cat.categories)
@@ -68,13 +68,13 @@ def _(col, b_arr, null_mask):
 
 def binary_col_to_int(b_arr, null_mask):
     arr = np.full(null_mask.shape, np.nan)
-    ser = pd.Series.from_array(arr)
+    ser = pd.Series(arr)
     ser.loc[~null_mask] = np.frombuffer(b_arr, dtype='>q')
     return ser
 
 def binary_col_to_float(b_arr, null_mask):
     arr = np.full(null_mask.shape, np.nan)
-    ser = pd.Series.from_array(arr)
+    ser = pd.Series(arr)
     ser.loc[~null_mask] = np.frombuffer(b_arr, dtype='>d')
     return ser
 
@@ -82,7 +82,7 @@ POSTGRES_EPOCH_TIME = pd.to_datetime('2000/1/1').tz_localize('utc')
 @binary_to_col.register(dt)
 def _(col, b_arr, null_mask):
     arr = np.full(null_mask.shape, np.nan)
-    ser = pd.Series.from_array(arr)
+    ser = pd.Series(arr)
     ser.loc[~null_mask] = np.frombuffer(b_arr, dtype='>q')
     ser = pd.to_datetime(ser / 1000000 + POSTGRES_EPOCH_TIME.timestamp(), unit='s')
     return ser
@@ -90,7 +90,7 @@ def _(col, b_arr, null_mask):
 @binary_to_col.register(delta)
 def _(col, b_arr, null_mask):
     arr = np.full(null_mask.shape, np.nan)
-    ser = pd.Series.from_array(arr)
+    ser = pd.Series(arr)
     ser.loc[~null_mask] = np.frombuffer(b_arr, dtype='>q')
     ser = pd.to_timedelta(ser, unit='ns')
     return ser
@@ -98,6 +98,6 @@ def _(col, b_arr, null_mask):
 @binary_to_col.register(bool_)
 def _(col, b_arr, null_mask):
     arr = np.full(null_mask.shape, np.nan)
-    ser = pd.Series.from_array(arr)
+    ser = pd.Series(arr)
     ser.loc[~null_mask] = np.frombuffer(b_arr, dtype='uint8') != 0
     return ser
