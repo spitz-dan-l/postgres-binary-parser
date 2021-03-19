@@ -20,7 +20,7 @@ Clone this repo and `cd` inside. Then do
 
 `pip install .`
 
-(This compiles the Cython amd makes `postgres_binary_parser` importable as a package.)
+(This compiles the Cython and makes `postgres_binary_parser` importable as a package.)
 
 ## Demo
 For a demo, see `demo.py`. Shows that you can use this package to load and store:
